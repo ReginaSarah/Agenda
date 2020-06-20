@@ -38,7 +38,11 @@
                     Home
                 </a>
             </button>
-            <button class="button">Cadastro</button>
+            <button class="button">
+                <a href = "localhost/login.php">
+                    Login
+                </a>
+            </button>
             <button class="button" >Contato</button>
 
         </div>
