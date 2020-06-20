@@ -1,0 +1,33 @@
+*{
+    flex-direction:column;
+    font-family:'Courier New', Courier, monospace;
+    text-align: center;
+} 
+#header{
+    height: 100px;
+    background-color: rgb(114, 194, 226);
+    padding: 5px; /*arrasta pra dentro*/
+}
+#menu{
+    margin-top: 5px; /*arrasta pra fora*/
+    height: 50px;
+    background-color:rgb(230, 134, 198);
+    margin-bottom: 5px;
+    padding: 5px;
+}
+#content{
+    height: 300px;
+    background-color: rgb(229, 157, 231);
+    padding: 5px;
+}
+#footer{
+    height: 20px;
+    background-color: rgb(172, 226, 176);
+    padding: 5px;
+}
+.button{
+    background-color: rgb(218, 147, 200);
+    border-color: rgb(218, 10, 166);
+    color:rgb(91, 4, 109);
+    border-radius: 8px;
+}
