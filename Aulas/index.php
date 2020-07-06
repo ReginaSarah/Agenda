@@ -1,6 +1,6 @@
 <HTML>
     <header>
-        <title>Login</title>
+        <title>Titulo</title>
         <meta charset='UTF-8'/>
         <link rel="stylesheet" type="text/css" href="style.css"/>
     </header>
@@ -38,7 +38,11 @@
                     Home
                 </a>
             </button>
-            <button class="button">Cadastro</button>
+            <button class="button">
+                <a href = "login.php">
+                    Login
+                </a>
+            </button>
             <button class="button" >Contato</button>
 
         </div>
@@ -48,11 +52,14 @@
             <br/>
             <p>Pulando linha</p>
             <center>
-                <h2>Entrar</h2>
-                <form method="GET" action="process2.php">
-                    <input type="text" id="email" name="email" placeholder="Email"/>
+            
+                <h2>Formulário de Cadastro</h2>
+                <form method="GET" action="process.php">
+                    <input type="text" id="nome" name="nome" placeholder="Nome"/>
                     <br/>
                     <input type="password" id="senha" name="senha" placeholder="Senha"/>
+                    <br/>
+                    <input type="text" id="email" name="email" placeholder="Email"/>
                     <br/>
                     <button class="button" type = "submit"> Enviar </button>
                 </form>

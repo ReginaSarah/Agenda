@@ -1,6 +1,6 @@
 <HTML>
     <header>
-        <title>Titulo</title>
+        <title>Agenda</title>
         <meta charset='UTF-8'/>
         <link rel="stylesheet" type="text/css" href="style.css"/>
     </header>
@@ -28,40 +28,15 @@
 
         <div id="header" class="header">
             <center>
-                <h1>Dicas Matrimoniais</h1>
+                <h1>Cadastro Médico</h1>
             </center>
         </div>
 
-        <div id="menu"> 
-            <button class="button">
-                <a href = "http://www.google.com">
-                    Home
-                </a>
-            </button>
-            <button class="button">
-                <a href = "localhost/login.php">
-                    Login
-                </a>
-            </button>
-            <button class="button" >Contato</button>
-
-        </div>
-
         <div id="content">
-            <p></p>
-            <br/>
-            <p>Pulando linha</p>
             <center>
-            <?php
-            if($_SESSION['logged']){
-                echo"<h1> Bem vindo".$_SESSION['name'] . ".</h1>"
-            }
-            else{
-                echo "Voce não é bem vindo";
-            }
-            ?>
+            
                 <h2>Formulário de Cadastro</h2>
-                <form method="GET" action="process.php">
+                <form>
                     <input type="text" id="nome" name="nome" placeholder="Nome"/>
                     <br/>
                     <input type="password" id="senha" name="senha" placeholder="Senha"/>

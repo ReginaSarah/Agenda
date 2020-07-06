@@ -1,42 +1,47 @@
 <?php
 
     session_start();
+    //$_SESSION['logged'] = false;
 
     $host = 'localhost';
     $user = 'root';
     $senha = '';
-    $db = "web";
+    $db = "eventos";
 
     //CONEXAO COM O BANCO DE DADOS
     $connect = mysqli_connect($host, $user, $senha, $db);
+
+    if($connect === false){
+        die("ERROR: Could not connect. " . mysqli_connect_error());
+    }
 
     //COLETA DOS DADOS DO FORMULÁRIO
     $email = $_GET['email'];
     $senhaUser = $_GET['senha'];
     
     //QUERY PARA DATABASE
-
-    //$sql = "INSERT INTO usuario (nome, senha, email) VALUES (' $nome ', ' $senhaUser ', '$email ')";
-    $sql = "SELECT * FROM usuario WHERE email LIKE \"%".$email."%\"";    
+    $sql = "SELECT * FROM cadastro WHERE senha LIKE \"%".$senhaUser."%\"";    
     $result = mysqli_query($connect, $sql);
 
     $fields = mysqli_fetch_array($result);
     
-    echo $fields['nome'] . $fields['senha'];
+    //echo $fields['nome'] . $fields['senha'] ;
 
-/*
-    if($fields['email'] == $_GET['email']){
+    if(isset($fields['email']) == $email){
         if($fields['senha'] == $senhaUser){
-            echo "Deu bom";
+            header('Location: index.php');
         }
         else{
-            echo "Senha invalida";
+            //senha();
+            header('Location: login.php');
         }
     }
     else{
-        echo "Email Invalido";
+        //email();
+        header('Location: login.php');
     }
-    */
+    /*
+    
     if($result->num_rows > 0){
         echo "Deu bom!";
         $_SESSION['logged'] = true;
@@ -44,6 +49,6 @@
     }
     else{
         echo "Seu login não existe, tente outro...";
-    }
-    //header('Location: index.php');*/
+    }*/
+    
 ?>
