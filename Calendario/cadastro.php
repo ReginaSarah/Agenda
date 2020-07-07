@@ -4,7 +4,7 @@
     <header>
         <title>Cadastro Agenda</title>
         <meta charset='UTF-8'/>
-        <link rel="stylesheet" type="text/css" href="style.css"/>
+        <link rel="stylesheet" type="text/css" href="css/style.css"/>
     </header>
 
     <script>

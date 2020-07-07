@@ -17,8 +17,8 @@
     $cidade = $_GET['cidade'];
     $genero = $_GET['genero'];
     $nascimento = $_GET['nascimento'];
-    $senhaUser = $_GET['senha'];
-    $confirmSenha = $_GET['confirmacaoSenha'];
+    $senhaUser = sha1(sha1(md5(sha1(md5($_GET['senha'])))));
+    $confirmSenha = sha1(sha1(md5(sha1(md5($_GET['confirmacaoSenha'])))));
 
     //QUERY PARA DATABASE
     $sql = "INSERT INTO cadastro (nome, email, cidade, nascimento, genero, senha, confirmacaoSenha) VALUES ('$nome', '$email', '$cidade', '$nascimento', '$genero', '$senhaUser ', '$confirmSenha')";

@@ -1,42 +1,29 @@
+<?php
+
+//include "processLogin.php";
+
+//session_start();
+ 
+if(isset($_SESSION['logged']) &&  $_SESSION['logged'] == true){
+	header("Location: index.php");
+}
+?>
+
 <HTML>
     <header>
         <title>Login Agenda</title>
         <meta charset='UTF-8'/>
         <link rel="stylesheet" type="text/css" href="style.css"/>
+        
     </header>
     
     <body>
-
-        <script type="text/javascript" src="https://code.jquery.com/jquery-1.4.3.min.js"></script>
-        <script type="text/javascript">
-            $('input').click(function(){
-                $.ajax({
-                    url: 'processLogin.php',
-                    success: function(data) {
-                        alert(data);
-                    },
-                    email: function(){
-                        alert("Email Inválido");
-                    },
-                    senha: function(){
-                        alert("Senha Inválida");
-                    }
-                });
-            });
-        </script>
 
         <div id="content">
             Não tem uma conta? 
             <a href = "cadastro.php">
                 Cadastre aqui
             </a>
-
-            <?php
-                session_start();
-                if(isset($_SESSION['logged']) == true){
-                    echo"<h1> Bem vindo ". $_SESSION['name'] . ".</h1>";
-                }
-            ?>
 
             <center>
                 <form id="formulario-entrar" autocomplete="off" method="GET" action="processLogin.php">
@@ -46,7 +33,7 @@
                         <br/>
                         <input class="campo" type="password" id="senha" name="senha" placeholder="Senha"/>
                         <br/>
-                        <button class="button" type = "submit"> Enviar </button>
+                        <button class="button" type = "submit" name="btn-login" id="btn-login"> Entrar </button>
                     </fieldset>
                 </form>
                 
@@ -54,12 +41,12 @@
 
         </div>
 
-        <div id="footer">
-
-        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>  
+        <script src="js/custom.js"></script>   
     </body>
 
     <footer>
+            entre em contato conosco
 
     </footer>
 </HTML>
