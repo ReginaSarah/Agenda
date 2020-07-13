@@ -10,7 +10,7 @@ $('document').ready(function(){
 			dataType: 'json',
 			beforeSend: function()
 			{	
-				$("#btn-login").html('Validando ...');
+				$("#btn-login").html('Carregando...');
 			},
 			success :  function(response){						
 				if(response.codigo == "1"){	

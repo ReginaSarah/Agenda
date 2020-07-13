@@ -1,6 +1,8 @@
 <?php
 	include_once("conexao.php");
-	$result_eventos = "SELECT * FROM consulta";
+	//include_once("processLogin.php");
+	//$login = $HTTP_SESSION_VARS['email'];
+	$result_eventos = "SELECT * FROM cadastro";
 	$resultado_eventos = mysqli_query($conn, $result_eventos);
 ?>
 <!DOCTYPE html>
@@ -13,6 +15,7 @@
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 	</head>
 	<body>
+
 		<div class="container theme-showcase" role="main">
 			<div class="page-header">
 				<h1>Listar Cursos</h1>

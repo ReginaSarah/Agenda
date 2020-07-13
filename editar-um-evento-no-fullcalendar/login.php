@@ -2,11 +2,14 @@
 
 //include "processLogin.php";
 
+//session_destroy();
 //session_start();
+session_reset();
  
 if(isset($_SESSION['logged']) &&  $_SESSION['logged'] == true){
 	header("Location: index.php");
 }
+
 ?>
 
 <HTML>

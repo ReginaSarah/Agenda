@@ -1,16 +1,28 @@
 <?php
-	include_once("conexao.php");
-	$result_eventos = "SELECT * FROM consulta";
-	$resultado_eventos = mysqli_query($conn, $result_eventos);
-?>
-<!DOCTYPE html>
-<html lang="pt-br">
-	<head>
+    include ("calendario.php");
+    include_once ("conexao.php");
+
+    //$nome = mysqli_real_escape_string($connect, $_GET['name']);
+    //$cod = mysqli_real_escape_string($connect, $_GET['cod']);
+    //$telefone = mysqli_real_escape_string($connect, $_GET['telefone']);
+    //$convenio = mysqli_real_escape_string($connect, $_GET['convenio']);
+    //$cidade = mysqli_real_escape_string($connect, $_GET['cidade']);
+    //$medico = mysqli_real_escape_string($connect, $_GET['medico']);
+    //$data = mysqli_real_escape_string($connect, $_GET['data_consulta']);
+    //$hora = mysqli_real_escape_string($connect, $_GET['hora']);
+
+	echo '<prev>';
+	print_r(montaEventos());
+?>  
+
+<html lang="pt-BR">
+<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Modal</title>
 		<link href="css/bootstrap.min.css" rel="stylesheet">
+		
 	</head>
 	<body>
 		<div class="container theme-showcase" role="main">
@@ -26,42 +38,42 @@
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<h4 class="modal-title text-center" id="myModalLabel">Cadastrar Curso</h4>
+							<h4 class="modal-title text-center" id="myModalLabel">Cadastrar Consulta</h4>
 						</div>
 						<div class="modal-body">
 							<form method="POST" action="http://localhost/teste/processa_cad.php" enctype="multipart/form-data">
 								<div class="form-group">
 								<label for="recipient-name" class="control-label">Nome:</label>
 								<input name="nome" type="text" class="form-control">
-							</div>
-							<div class="form-group">
-								<label for="recipient-cod" class="control-label">Código</label>
-								<textarea name="cod" class="form-control"></textarea>
-							</div>
-							<div class="form-group">
-								<label for="recipient-telefone" class="control-label">Telefone</label>
-								<textarea name="telefone" class="form-control"></textarea>
-							</div>
-							<div class="form-group">
-								<label for="recipient-convenio" class="control-label">Convênio</label>
-								<textarea name="convenio" class="form-control"></textarea>
-							</div>
-							<div class="form-group">
-								<label for="recipient-cidade" class="control-label">Estado/Cidade</label>
-								<textarea name="cidade" class="form-control"></textarea>
-							</div>
-							<div class="form-group">
-								<label for="recipient-medico" class="control-label">Indicação</label>
-								<textarea name="medico" class="form-control"></textarea>
-							</div>
-							<div class="form-group">
-								<label for="recipient-data_consulta" class="control-label">Data</label>
-								<textarea name="data_consulta" class="form-control"></textarea>
-							</div>
-							<div class="form-group">
-								<label for="recipient-hora" class="control-label">Horário</label>
-								<textarea name="hora" class="form-control"></textarea>
-							</div>
+								</div>
+								<div class="form-group">
+									<label for="recipient-cod" class="control-label">Código</label>
+									<textarea name="cod" class="form-control"></textarea>
+								</div>
+								<div class="form-group">
+									<label for="recipient-telefone" class="control-label">Telefone</label>
+									<textarea name="telefone" class="form-control"></textarea>
+								</div>
+								<div class="form-group">
+									<label for="recipient-convenio" class="control-label">Convênio</label>
+									<textarea name="convenio" class="form-control"></textarea>
+								</div>
+								<div class="form-group">
+									<label for="recipient-cidade" class="control-label">Estado/Cidade</label>
+									<textarea name="cidade" class="form-control"></textarea>
+								</div>
+								<div class="form-group">
+									<label for="recipient-medico" class="control-label">Indicação</label>
+									<textarea name="medico" class="form-control"></textarea>
+								</div>
+								<div class="form-group">
+									<label for="recipient-data_consulta" class="control-label">Data</label>
+									<textarea name="data_consulta" class="form-control"></textarea>
+								</div>
+								<div class="form-group">
+									<label for="recipient-hora" class="control-label">Horário</label>
+									<textarea name="hora" class="form-control"></textarea>
+								</div>
 								<div class="modal-footer">
 									<button type="submit" class="btn btn-success">Cadastrar</button>
 								</div>
@@ -183,12 +195,18 @@
 		
 		<!-- Fim EDITAR -->
 		
-		
+		<div class="calendario">
+			<?php 
+				echo "<prev>";
+				CalendarioMes();
+			?>
+		</div>
 
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
 		<script src="js/bootstrap.min.js"></script>
+		<script src="js/functions.js"></script>
 		<script type="text/javascript">
 			$('#exampleModal').on('show.bs.modal', function (event) {
 				var button = $(event.relatedTarget) // Button that triggered the modal
@@ -217,5 +235,6 @@
 				modal.find('#recipient-hora').val(recipienthora)
 			})
 		</script>
-	</body>
+        
+    </body>
 </html>
