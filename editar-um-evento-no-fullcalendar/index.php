@@ -49,7 +49,8 @@ $resultado_events = mysqli_query($conn, $result_events);
 					editable: true,
 					eventLimit: true, // allow "more" link when too many events
 					eventClick: function(event) {
-						
+						$("#apagar_evento").attr("href", "proc-apag-evento.php?id=" + event.id);
+
 						$('#visualizar #nome').text(event.title);
 						$('#visualizar #nome').val(event.title);
 						$('#visualizar #id').text(event.id);
@@ -59,7 +60,7 @@ $resultado_events = mysqli_query($conn, $result_events);
 						$('#visualizar #data_consulta').val(event.start.format('DD/MM/YYYY HH:mm:ss'));
 						$('#visualizar').modal('show');
 
-						$idEsp = $_GET['id']; 
+		
 						return false;
 
 					},
@@ -82,7 +83,8 @@ $resultado_events = mysqli_query($conn, $result_events);
 									color: '<?php echo $row_events['cod']; ?>',
 									end: '<?php echo $row_events['telefone']; ?>',
 									start: '<?php echo $row_events['data_consulta']; ?>',
-
+								
+									
 								},<?php
 							}
 						?>
@@ -133,10 +135,11 @@ $resultado_events = mysqli_query($conn, $result_events);
 								<dd id="data_consulta"></dd>
 							</dl>
 							<button class="btn btn-canc-vis btn-warning">Editar</button>
-							<a href="proc-apag-evento.php?id=<?php$idEsp?> "><button type="button" class="btn btn-xs btn-danger">Apagar</button></a>
+							<a href="" id="apagar_evento" class="btn btn-danger">Apagar</a>
 						</div>
+						
 						<div class="form">
-							<form method="GET" action="proc-edit-evento.php" enctype="multipart/form-data">
+							<form method="GET" action="proc_edit_evento.php" enctype="multipart/form-data">
 								<div class="form-group">
 									<label for="recipient-name" class="control-label">Nome:</label>
 									<input name="nome" type="text" class="form-control" id="recipient-name">
@@ -170,8 +173,6 @@ $resultado_events = mysqli_query($conn, $result_events);
 									<button type="submit" class="btn btn-danger">Alterar</button>
 								</div>
 							</form>
-							
-						
 						</div>
 					</div>
 				</div>

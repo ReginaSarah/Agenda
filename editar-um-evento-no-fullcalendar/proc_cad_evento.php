@@ -12,7 +12,7 @@
     $medico = mysqli_real_escape_string($conn, $_GET['medico']);
     $data = mysqli_real_escape_string($conn, $_GET['data_consulta']);
 	
-	$result_eventos = "INSERT INTO consulta (nome, cod, telefone, convenio, cidade, medico, data_consulta) VALUES ('$nome', '$cod', '$telefone', '$convenio', '$cidade', '$medico', '$data', '$hora')";	
+	$result_eventos = "INSERT INTO consulta (nome, cod, telefone, convenio, cidade, medico, data_consulta) VALUES ('$nome', '$cod', '$telefone', '$convenio', '$cidade', '$medico', '$data')";	
 	$resultado_eventos = mysqli_query($conn, $result_eventos);	
 
 	header("index.php");
