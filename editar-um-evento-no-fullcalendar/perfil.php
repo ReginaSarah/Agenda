@@ -2,8 +2,19 @@
 	include_once("conexao.php");
 	//include_once("processLogin.php");
 	//$login = $HTTP_SESSION_VARS['email'];
-	$result_eventos = "SELECT * FROM cadastro";
-	$resultado_eventos = mysqli_query($conn, $result_eventos);
+
+	session_start();
+	if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true))
+	{	
+		unset($_SESSION['nome']);
+		unset($_SESSION['login']);
+		unset($_SESSION['senha']);
+		header('location:login.php');
+	}
+	$logado = $_SESSION['login'];
+
+	$result_perfil = "SELECT * FROM cadastro";
+	$resultado_perfil = mysqli_query($conn, $result_perfil);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -11,113 +22,63 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Modal</title>
+		<title>Perfil</title>
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 	</head>
 	<body>
 
 		<div class="container theme-showcase" role="main">
 			<div class="page-header">
-				<h1>Listar Cursos</h1>
+				<h1>Perfil Pessoal</h1>
 			</div>
 			<div class="pull-right">
-				<button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#myModalcad">Cadastrar</button>
+				<button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#myModalcad">
+					<a href = "index.php"> Voltar a Agenda </a>
+				</button>
 			</div>
-			<!-- Inicio Modal -->
-			<div class="modal fade" id="myModalcad" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<h4 class="modal-title text-center" id="myModalLabel">Cadastrar Curso</h4>
-						</div>
-						<div class="modal-body">
-							<form method="POST" action="http://localhost/teste/processa_cad.php" enctype="multipart/form-data">
-								<div class="form-group">
-								<label for="recipient-name" class="control-label">Nome:</label>
-								<input name="nome" type="text" class="form-control">
-							</div>
-							<div class="form-group">
-								<label for="recipient-cod" class="control-label">Código</label>
-								<textarea name="cod" class="form-control"></textarea>
-							</div>
-							<div class="form-group">
-								<label for="recipient-telefone" class="control-label">Telefone</label>
-								<textarea name="telefone" class="form-control"></textarea>
-							</div>
-							<div class="form-group">
-								<label for="recipient-convenio" class="control-label">Convênio</label>
-								<textarea name="convenio" class="form-control"></textarea>
-							</div>
-							<div class="form-group">
-								<label for="recipient-cidade" class="control-label">Estado/Cidade</label>
-								<textarea name="cidade" class="form-control"></textarea>
-							</div>
-							<div class="form-group">
-								<label for="recipient-medico" class="control-label">Indicação</label>
-								<textarea name="medico" class="form-control"></textarea>
-							</div>
-							<div class="form-group">
-								<label for="recipient-data_consulta" class="control-label">Data</label>
-								<textarea name="data_consulta" class="form-control"></textarea>
-							</div>
-							<div class="form-group">
-								<label for="recipient-hora" class="control-label">Horário</label>
-								<textarea name="hora" class="form-control"></textarea>
-							</div>
-								<div class="modal-footer">
-									<button type="submit" class="btn btn-success">Cadastrar</button>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- Fim Modal -->
-			
+						
 			<div class="row">
 				<div class="col-md-12">
 					<table class="table">
 						<thead>
 							<tr>
 								<th>#</th>
-								<th>Agendamento de Clientes</th>
+								<th>Cadastros</th>
 								<th>Ação</th>
 							</tr>
 						</thead>
 						<tbody>
-							<?php while($rows_cursos = mysqli_fetch_assoc($resultado_eventos)){ ?>
+							<?php while($row_perfil = mysqli_fetch_assoc($resultado_perfil)){ ?>
 								<tr>
-									<td><?php echo $rows_cursos['id']; ?></td>
-									<td><?php echo $rows_cursos['nome']; ?></td>
+									<td><?php echo $row_perfil['id']; ?></td>
+									<td><?php echo $row_perfil['nome']; ?></td>
 									<td>
-										<button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#myModal<?php echo $rows_cursos['id']; ?>">Visualizar</button>
-										
-										<button type="button" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#exampleModal" data-whatever="<?php echo $rows_cursos['id']; ?>" data-whatevernome="<?php echo $rows_cursos['nome']; ?>"  
-										data-whatevercod="<?php echo $rows_cursos['cod']; ?>" data-whatevertelefone="<?php echo $rows_cursos['telefone']; ?>" data-whateverconvenio="<?php echo $rows_cursos['convenio']; ?>"
-										data-whatevercidade="<?php echo $rows_cursos['cidade']; ?>" data-whatevermedico="<?php echo $rows_cursos['medico']; ?>" data-whateverdata_consulta="<?php echo $rows_cursos['data_consulta']; ?>"
-										data-whateverhora="<?php echo $rows_cursos['hora']; ?>">Editar</button>
-										
-										<a href="processa_apagar.php?id=<?php echo $rows_cursos['id']; ?>"><button type="button" class="btn btn-xs btn-danger">Apagar</button></a>
+										<button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#myModal<?php echo $row_perfil['id']; ?>">Visualizar</button>
+										<?php if($row_perfil['email'] == $logado){ ?>
+											<button type="button" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#exampleModal" data-whatever="<?php echo $row_perfil['id']; ?>" data-whatevernome="<?php echo $row_perfil['nome']; ?>"  
+											data-whateveremail="<?php echo $row_perfil['email']; ?>" data-whatevertelefone="<?php echo $row_perfil['telefone']; ?>" data-whatevergenero="<?php echo $row_perfil['genero']; ?>"
+											data-whatevercidade="<?php echo $row_perfil['cidade']; ?>" data-whatevernascimento="<?php echo $row_perfil['nascimento']; ?>" data-whateversenha="<?php echo $row_perfil['senha']; ?>"
+											data-whateverconfirmacaoSenha="<?php echo $row_perfil['confirmacaoSenha']; ?>">Editar</button>
+											
+											<a href="proc-apag-perfil.php?id=<?php echo $row_perfil['id']; ?>"><button type="button" class="btn btn-xs btn-danger">Apagar</button></a>
+										<?php } ?>
 									</td>
 								</tr>
 								<!-- Inicio VISUALIZAR -->
-								<div class="modal fade" id="myModal<?php echo $rows_cursos['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+								<div class="modal fade" id="myModal<?php echo $row_perfil['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 									<div class="modal-dialog" role="document">
 										<div class="modal-content">
 											<div class="modal-header">
 												<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-												<h4 class="modal-title text-center" id="myModalLabel"><?php echo $rows_cursos['nome']; ?></h4>
+												<h4 class="modal-title text-center" id="myModalLabel"><?php echo $row_perfil['nome']; ?></h4>
 											</div>
 											<div class="modal-body">
-												<p><?php echo $rows_cursos['nome']; ?></p>
-												<p><?php echo $rows_cursos['cod']; ?></p>
-												<p><?php echo $rows_cursos['telefone']; ?></p>
-												<p><?php echo $rows_cursos['convenio']; ?></p>
-												<p><?php echo $rows_cursos['cidade']; ?></p>
-												<p><?php echo $rows_cursos['medico']; ?></p>
-												<p><?php echo $rows_cursos['data_consulta']; ?></p>
-												<p><?php echo $rows_cursos['hora']; ?></p>
+												<p><?php echo $row_perfil['nome']; ?></p>
+												<p><?php echo $row_perfil['email']; ?></p>
+												<p><?php echo $row_perfil['telefone']; ?></p>
+												<p><?php echo $row_perfil['cidade']; ?></p>
+												<p><?php echo $row_perfil['nascimento']; ?></p>
+												<p><?php echo $row_perfil['genero']; ?></p>
 											</div>
 										</div>
 									</div>
@@ -140,38 +101,35 @@
 						<h4 class="modal-title" id="exampleModalLabel">Cursos</h4>
 					</div>
 					<div class="modal-body">
-						<form method="POST" action="http://localhost/teste/processa.php" enctype="multipart/form-data">
+						<form method="GET" action="proc-edit-perfil.php" enctype="multipart/form-data">
 							<div class="form-group">
 								<label for="recipient-name" class="control-label">Nome:</label>
 								<input name="nome" type="text" class="form-control" id="recipient-name">
 							</div>
 							<div class="form-group">
-								<label for="recipient-cod" class="control-label">Código</label>
-								<textarea name="cod" class="form-control" id="recipient-cod"></textarea>
+								<label for="recipient-email" class="control-label">Email:</label>
+								<input name="email" type="text" class="form-control" id="recipient-email"></input>
 							</div>
 							<div class="form-group">
-								<label for="recipient-telefone" class="control-label">Telefone</label>
-								<textarea name="telefone" class="form-control" id="recipient-telefone"></textarea>
+								<label for="recipient-telefone" class="control-label">Telefone:</label>
+								<input name="telefone" type="text" class="form-control" id="recipient-telefone"></input>
 							</div>
 							<div class="form-group">
-								<label for="recipient-convenio" class="control-label">Convênio</label>
-								<textarea name="convenio" class="form-control" id="recipient-convenio"></textarea>
+								<label for="recipient-genero" class="control-label">Gênero:</label>
+								<select name="genero" id="recipient-genero">
+                                        <option value=""></option>
+                                        <option value="Fem">Feminino</option>
+                                        <option value="Mas">Masculino</option>
+                                        <option value="NA">Prefiro não dizer</option>
+                                </select>
 							</div>
 							<div class="form-group">
-								<label for="recipient-cidade" class="control-label">Estado/Cidade</label>
-								<textarea name="cidade" class="form-control" id="recipient-cidade"></textarea>
+								<label for="recipient-cidade" class="control-label">Estado/Cidade:</label>
+								<input name="cidade"  type="text" class="form-control" id="recipient-cidade"></input>
 							</div>
 							<div class="form-group">
-								<label for="recipient-medico" class="control-label">Indicação</label>
-								<textarea name="medico" class="form-control" id="recipient-medico"></textarea>
-							</div>
-							<div class="form-group">
-								<label for="recipient-data_consulta" class="control-label">Data</label>
-								<textarea name="data_consulta" class="form-control" id="recipient-data_consulta"></textarea>
-							</div>
-							<div class="form-group">
-								<label for="recipient-hora" class="control-label">Horário</label>
-								<textarea name="hora" class="form-control" id="recipient-hora"></textarea>
+								<label for="recipient-nascimento" class="control-label">Nascimento:</label>
+								<input name="nascimento"  type="Date" class="form-control" id="recipient-nascimento"></input>
 							</div>
 							<input name="id" type="hidden" id="id_curso">
 							<div class="modal-footer">
@@ -197,27 +155,28 @@
 				var button = $(event.relatedTarget) // Button that triggered the modal
 				var recipient = button.data('whatever') // Extract info from data-* attributes
 				var recipientnome = button.data('whatevernome')
-				var recipientcod = button.data('whatevercod')
+				var recipientemail = button.data('whateveremail')
 				var recipienttelefone = button.data('whatevertelefone')
-				var recipientconvenio = button.data('whateverconvenio')
+				var recipientnascimento = button.data('whatevernascimento')
 				var recipientcidade = button.data('whatevercidade')
-				var recipientmedico = button.data('whatevermedico')
-				var recipientdataconsulta = button.data('whateverdata_consulta')
-				var recipienthora = button.data('whateverhora')
+				var recipientgenero = button.data('whatevergenero')
+				var recipientsenha = button.data('whateversenha')
+				var recipientconfirmacaoSenha = button.data('whateverconfirmacaoSenha')
+				
 				
 				// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
 				// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
 				var modal = $(this)
-				modal.find('.modal-title').text('ID do Curso: ' + recipient)
+				modal.find('.modal-title').text('ID do Cadastro: ' + recipient)
 				modal.find('#id_curso').val(recipient)
 				modal.find('#recipient-name').val(recipientnome)
-				modal.find('#recipient-cod').val(recipientcod)
+				modal.find('#recipient-email').val(recipientemail)
 				modal.find('#recipient-telefone').val(recipienttelefone)
-				modal.find('#recipient-convenio').val(recipientconvenio)
+				modal.find('#recipient-nascimento').val(recipientnascimento)
 				modal.find('#recipient-cidade').val(recipientcidade)
-				modal.find('#recipient-medico').val(recipientmedico)
-				modal.find('#recipient-data_consulta').val(recipientdataconsulta)
-				modal.find('#recipient-hora').val(recipienthora)
+				modal.find('#recipient-genero').val(recipientgenero)
+				modal.find('#recipient-senha').val(recipientsenha)
+				modal.find('#recipient-confirmacaoSenha').val(recipientconfirmacaoSenha)
 			})
 		</script>
 	</body>

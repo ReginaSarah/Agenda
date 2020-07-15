@@ -15,5 +15,5 @@
         $delete_event->execute();
 
     //}*/
-    header("index.php");
+    header("Location: index.php");
 ?>

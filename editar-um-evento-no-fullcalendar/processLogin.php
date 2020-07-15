@@ -44,22 +44,27 @@
 
     include_once("conexao.php");
     
-    /*
+    
     //1 - Verifica se a origem da requisição é do mesmo domínio da aplicação
-    if (isset($_SERVER['HTTP_REFERER']) && ($_SERVER['HTTP_REFERER'] != "http://localhost/editar-um-evento-no-fullcalendar/login.php" || ($_SERVER['HTTP_REFERER'] != "http://http://localhost/editar-um-evento-no-fullcalendar/perfil.php"))){
+    if (isset($_SERVER['HTTP_REFERER']) && ($_SERVER['HTTP_REFERER'] != "http://localhost/editar-um-evento-no-fullcalendar/login.php" )){
         $retorno = array('codigo' => '0', 'mensagem' => 'Origem da requisição não autorizada!');
         echo json_encode($retorno);
         exit();
-    }*/
+    }
     
     
     
     // Recebe os dados do formulário
-    $email = (isset($_GET['email'])) ? $_GET['email'] : '' ;
-    $senhaUser = (isset($_GET['senha'])) ? $_GET['senha'] : '' ;
+    $email = $_GET['email'];
+    $senhaUser = $_GET['senha'];
+
+    //$senhaUser = filter_input(INPUT_POST, 'senha', FILTER_SANITIZE_SPECIAL_CHARS);
+    //$confereSenhaUser = filter_input(INPUT_POST, 'senha', FILTER_SANITIZE_MAGIC_QUOTES);
+
     $id = "SELECT id FROM cadastro WHERE email LIKE \"%".$email."%\"";
+    $nome = (isset($_GET['nome'])) ? $_GET['nome'] : '' ;
     
-    /*
+    
     // 2 - Validações de preenchimento e-mail e senha se foi preenchido o e-mail
     if (empty($email)){
         $retorno = array('codigo' => '0', 'mensagem' => 'Preencha seu e-mail!');
@@ -73,13 +78,13 @@
         exit();
     }
     
-    /*
+    
     // 3 - Verifica se o formato do e-mail é válido
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
         $retorno = array('codigo' => '0', 'mensagem' => 'Formato de e-mail inválido!');
         echo json_encode($retorno);
         exit();
-    }*/
+    }
     
     
     // 4 - Válida os dados do usuário com o banco de dados
@@ -89,18 +94,26 @@
     $fields = mysqli_fetch_array($result);
 
     if(isset($fields['email']) == $email){
-        if($fields['senha'] == $senhaUser){
+        if(isset($fields['senha']) == $senhaUser){
             $_SESSION['logged'] = true;
+            $_SESSION['nome'] = $nome;
+            $_SESSION['login'] = $email;
+            $_SESSION['senha'] = $senhaUser;
             header('Location: index.php');
         }
         else{
             $retorno = array('codigo' => '0', 'mensagem' => 'Senha Invalida!');
             echo json_encode($retorno);
+            $_SESSION['logged'] = false;
+            //header("Location: login.php");
         }
     }
     else{
-        $retorno = array('codigo' => '0', 'mensagem' => 'E-mail Invalido!');
-        echo json_encode($retorno);
+        $_SESSION['logged'] = false;
+        unset($_SESSION['nome']);
+        unset ($_SESSION['login']);
+        unset ($_SESSION['senha']);
+        //header('Location: login.php');
     }    
     
     

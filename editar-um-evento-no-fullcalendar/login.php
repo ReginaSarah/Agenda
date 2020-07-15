@@ -32,6 +32,8 @@ if(isset($_SESSION['logged']) &&  $_SESSION['logged'] == true){
                 <form id="formulario-entrar" autocomplete="off" method="GET" action="processLogin.php">
                     <fieldset>
                         <legend>Entre</legend>
+                        <input class="campo" type="text" id="nome" name="nome" placeholder="Nome"/>
+                        <br/>
                         <input class="campo" type="text" id="email" name="email" placeholder="Email"/>
                         <br/>
                         <input class="campo" type="password" id="senha" name="senha" placeholder="Senha"/>

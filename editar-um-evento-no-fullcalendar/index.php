@@ -1,18 +1,29 @@
 <?php
-//session_start();
-include_once ("conexao.php");
-//include_once ("processLogin.php");
+	//session_start();
+	include_once ("conexao.php");
+	//include_once ("processLogin.php");
 
-/*if(!isset ($_SESSION['logged']) == true)
-{
-  unset($_SESSION['logged']);
-  header('login.php');
-}
+	/*if(!isset ($_SESSION['logged']) == true)
+	{
+	unset($_SESSION['logged']);
+	header('login.php');
+	}
 
-$login = $_SESSION['logged'];*/
+	$login = $_SESSION['logged'];*/
+	session_start();
+	if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true))
+	{	
+		unset($_SESSION['nome']);
+		unset($_SESSION['login']);
+		unset($_SESSION['senha']);
+		header('location:login.php');
+	}
+	
+	
+	$logado = $_SESSION['nome'];
 
-$result_events = "SELECT id, nome, cod, telefone, data_consulta FROM consulta";
-$resultado_events = mysqli_query($conn, $result_events);
+	$result_events = "SELECT id, nome, cod, telefone, cidade, convenio, data_consulta FROM consulta";
+	$resultado_events = mysqli_query($conn, $result_events);
 ?>
 
 <!DOCTYPE html>
@@ -30,11 +41,22 @@ $resultado_events = mysqli_query($conn, $result_events);
 		<script src='js/moment.min.js'></script>
 		<script src='js/fullcalendar.min.js'></script>
 		<script src='locale/pt-br.js'></script>
-		<button type="button" class="btn btn-info">
-			<a href = "perfil.php">
-                Perfil
-            </a>
-		</button>
+
+		<center>
+			<?php
+				echo "Bem vindo $logado";
+			?>
+			<button type="button" class="btn btn-info">
+				<a href = "perfil.php">
+					Perfil
+				</a>
+			</button>
+			<button type="button" class="btn btn-danger">
+				<a href="processLogout.php">
+					Sair
+				</a>
+			</button>
+		</center>
 		
 		<script>
 			$(document).ready(function() {
@@ -51,13 +73,14 @@ $resultado_events = mysqli_query($conn, $result_events);
 					eventClick: function(event) {
 						$("#apagar_evento").attr("href", "proc-apag-evento.php?id=" + event.id);
 
+						
 						$('#visualizar #nome').text(event.title);
 						$('#visualizar #nome').val(event.title);
 						$('#visualizar #id').text(event.id);
 						$('#visualizar #id').val(event.id);
 						
-						$('#visualizar #data_consulta').text(event.start.format('DD/MM/YYYY HH:mm:ss'));
-						$('#visualizar #data_consulta').val(event.start.format('DD/MM/YYYY HH:mm:ss'));
+						$('#visualizar #data_consulta').text(event.start.format('YYYY/MM/DD HH:mm:ss'));
+						$('#visualizar #data_consulta').val(event.start.format('YYYY/MM/DD HH:mm:ss'));
 						$('#visualizar').modal('show');
 
 		
@@ -68,8 +91,8 @@ $resultado_events = mysqli_query($conn, $result_events);
 					selectable: true,
 					selectHelper: true, //destaca a hora
 					select: function(start){
-						$('#cadastrar #start').val(moment(start).format('DD/MM/YYYY HH:mm:ss'));
-						$('#cadastrar #end').val(moment(start).format('DD/MM/YYYY HH:mm:ss'));
+						$('#cadastrar #start').val(moment(start).format('YYYY/MM/DD HH:mm:ss'));
+						$('#cadastrar #end').val(moment(start).format('YYYY/MM/DD HH:mm:ss'));
 						$('#cadastrar').modal('show');
 					},
 					
@@ -102,7 +125,6 @@ $resultado_events = mysqli_query($conn, $result_events);
 			<?php
 			if(isset($_SESSION['logged'])){
 				echo $_SESSION['logged'];
-				unset($_SESSION['logged']);
 			}
 			?>
 		
@@ -142,7 +164,7 @@ $resultado_events = mysqli_query($conn, $result_events);
 							<form method="GET" action="proc_edit_evento.php" enctype="multipart/form-data">
 								<div class="form-group">
 									<label for="recipient-name" class="control-label">Nome:</label>
-									<input name="nome" type="text" class="form-control" id="recipient-name">
+									<input name="nome" type="text" class="form-control" id="event.id">
 								</div>
 								<div class="form-group">
 									<label for="recipient-cod" class="control-label">Código</label>
@@ -166,7 +188,7 @@ $resultado_events = mysqli_query($conn, $result_events);
 								</div>
 								<div class="form-group">
 									<label for="recipient-data_consulta" class="control-label">Data</label>
-									<input name="data_consulta" type="DateTime-Local" class="form-control" id="recipient-name">
+									<input name="data_consulta" type="text" class="form-control" id="start" placeholder="AAAA/MM/DD HH:mm:ss">
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
