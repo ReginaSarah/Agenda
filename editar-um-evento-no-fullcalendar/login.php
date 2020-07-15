@@ -16,6 +16,7 @@ if(isset($_SESSION['logged']) &&  $_SESSION['logged'] == true){
     <header>
         <title>Login Agenda</title>
         <meta charset='UTF-8'/>
+        <link rel="stylesheet" href="css/personalizado.css">
         
         
     </header>
@@ -51,7 +52,7 @@ if(isset($_SESSION['logged']) &&  $_SESSION['logged'] == true){
     </body>
 
     <footer>
-            entre em contato conosco
+            Entre em contato conosco
 
     </footer>
 </HTML>

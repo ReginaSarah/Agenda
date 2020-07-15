@@ -22,7 +22,7 @@
 	
 	$logado = $_SESSION['nome'];
 
-	$result_events = "SELECT id, nome, cod, telefone, cidade, convenio, data_consulta FROM consulta";
+	$result_events = "SELECT id, nome, cod, telefone, cidade, convenio, medico, data_consulta FROM consulta";
 	$resultado_events = mysqli_query($conn, $result_events);
 ?>
 
@@ -73,15 +73,23 @@
 					eventClick: function(event) {
 						$("#apagar_evento").attr("href", "proc-apag-evento.php?id=" + event.id);
 
-						
+						//let $telefone = (event.extendedProps.telefone);
 						$('#visualizar #nome').text(event.title);
 						$('#visualizar #nome').val(event.title);
-						$('#visualizar #id').text(event.id);
-						$('#visualizar #id').val(event.id);
-						
+						$('#visualizar #telefone').text(event.extendedProps.tel);
+						$('#visualizar #telefone').val(event.extendedProps.tel);
+						$('#visualizar #color').text(event.color);
+						$('#visualizar #color').val(event.color);
+						$('#visualizar #convenio').text(event.conv);
+						$('#visualizar #convenio').val(event.conv);
+						$('#visualizar #medico').text(event.med);
+						$('#visualizar #medico').val(event.med);
 						$('#visualizar #data_consulta').text(event.start.format('YYYY/MM/DD HH:mm:ss'));
 						$('#visualizar #data_consulta').val(event.start.format('YYYY/MM/DD HH:mm:ss'));
 						$('#visualizar').modal('show');
+
+
+
 
 		
 						return false;
@@ -103,11 +111,13 @@
 								{
 									id: '<?php echo $row_events['id']; ?>',
 									title: '<?php echo $row_events['nome']; ?>',
-									color: '<?php echo $row_events['cod']; ?>',
-									end: '<?php echo $row_events['telefone']; ?>',
+									color: '<?php echo $row_events['cidade']; ?>',
 									start: '<?php echo $row_events['data_consulta']; ?>',
-								
-									
+									extendedProps: {
+										tel: '<?php echo $row_events['telefone']; ?>'
+									},
+									conv: '<?php echo $row_events['convenio']; ?>',
+									med: '<?php echo $row_events['medico']; ?>',
 								},<?php
 							}
 						?>
@@ -122,11 +132,6 @@
 			<div class="page-header">
 				<h1>Agenda Radiografia</h1>
 			</div>
-			<?php
-			if(isset($_SESSION['logged'])){
-				echo $_SESSION['logged'];
-			}
-			?>
 		
 			<div id='calendar'></div>
 		</div>
@@ -141,22 +146,30 @@
 					<div class="modal-body">
 						<div class="visualizar">
 							<dl class="dl-horizontal">
-								<dt>Nome</dt>
+								<dt>Nome:</dt>
 								<dd id="nome"></dd>
-								<dt>id</dt>
-								<dd id="id"></dd>
-								<dt>Telefone</dt>
+								<dt>Telefone:</dt>
 								<dd id="telefone"></dd>
-								<dt>Convênio</dt>
-								<dd id="convenio"></dd>
-								<dt>Cidade</dt>
-								<dd id="cidade"></dd>
-								<dt>Médico</dt>
+								<dt>Cidade:</dt>
+								<dd id="color"></dd>
+								<dt>Indicação:</dt>
 								<dd id="medico"></dd>
-								<dt>Data</dt>
+								<dt>Convênio:</dt>
+								<dd id="convenio"></dd>
+								<dt>Data/Hora:</dt>
 								<dd id="data_consulta"></dd>
 							</dl>
-							<button class="btn btn-canc-vis btn-warning">Editar</button>
+							<button id="editar" type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalLabel" 
+									data-whatever="<?php echo $row_events['id']; ?>" 
+									data-whatevernome="<?php echo $row_events['nome']; ?>" 
+									data-whatevercod="<?php echo $row_events['cod']; ?>" 
+									data-whatevertelefone="<?php echo $row_events['telefone']; ?>"
+									data-whateverconvenio="<?php echo $row_events['convenio']; ?>"
+									data-whatevercidade="<?php echo $row_events['cidade']; ?>"
+									data-whatevermedico="<?php echo $row_events['medico']; ?>"
+									data-whateverdata_consulta="<?php echo $row_events['data_consulta']; ?>">
+									Editar
+							</button>
 							<a href="" id="apagar_evento" class="btn btn-danger">Apagar</a>
 						</div>
 						

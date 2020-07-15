@@ -117,7 +117,6 @@
 							<div class="form-group">
 								<label for="recipient-genero" class="control-label">Gênero:</label>
 								<select name="genero" id="recipient-genero">
-                                        <option value=""></option>
                                         <option value="Fem">Feminino</option>
                                         <option value="Mas">Masculino</option>
                                         <option value="NA">Prefiro não dizer</option>
