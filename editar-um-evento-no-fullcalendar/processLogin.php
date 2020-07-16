@@ -43,69 +43,58 @@
     session_start(); 
 
     include_once("conexao.php");
-    
-    
-    //1 - Verifica se a origem da requisição é do mesmo domínio da aplicação
-    if (isset($_SERVER['HTTP_REFERER']) && ($_SERVER['HTTP_REFERER'] != "http://localhost/editar-um-evento-no-fullcalendar/login.php" )){
-        $retorno = array('codigo' => '0', 'mensagem' => 'Origem da requisição não autorizada!');
-        echo json_encode($retorno);
-        exit();
-    }
-    
+
+    $_SESSION['logged'] = false;
     
     
     // Recebe os dados do formulário
-    $email = $_GET['email'];
-    $senhaUser = $_GET['senha'];
-
-    //$senhaUser = filter_input(INPUT_POST, 'senha', FILTER_SANITIZE_SPECIAL_CHARS);
-    //$confereSenhaUser = filter_input(INPUT_POST, 'senha', FILTER_SANITIZE_MAGIC_QUOTES);
-
+    $email = (isset($_GET['email'])) ? $_GET['email'] : '' ;
+    $senhaUser =(isset($_GET['senha'])) ? $_GET['senha'] : '' ;
     $id = "SELECT id FROM cadastro WHERE email LIKE \"%".$email."%\"";
     $nome = (isset($_GET['nome'])) ? $_GET['nome'] : '' ;
     
     
-    // 2 - Validações de preenchimento e-mail e senha se foi preenchido o e-mail
+    // Validações de preenchimento e-mail e senha se foi preenchido o e-mail
     if (empty($email)){
-        $retorno = array('codigo' => '0', 'mensagem' => 'Preencha seu e-mail!');
-        echo json_encode($retorno);
+        $retorna = ['sit' => false, 'msg' => '<div class="alert alert-danger" role="alert">Erro: Preencha o campo de e-mail</div>'];
+        $_SESSION['msg'] = '<div class="alert alert-danger" role="alert">Preencha seu email</div>';
+        header("Location: login.php");
         exit();
     }
     
     if (empty($senhaUser)){
-        $retorno = array('codigo' => '0', 'mensagem' => 'Preencha sua senha!');
-        echo json_encode($retorno);
+        $retorna = ['sit' => false, 'msg' => '<div class="alert alert-danger" role="alert">Erro: Preencha o campo de senha</div>'];
+        $_SESSION['msg'] = '<div class="alert alert-danger" role="alert">Preencha sua senha</div>';
+        header("Location: login.php");
         exit();
     }
     
     
-    // 3 - Verifica se o formato do e-mail é válido
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
-        $retorno = array('codigo' => '0', 'mensagem' => 'Formato de e-mail inválido!');
-        echo json_encode($retorno);
-        exit();
-    }
     
-    
-    // 4 - Válida os dados do usuário com o banco de dados
+    //  Válida os dados do usuário com o banco de dados
     $sql = "SELECT * FROM cadastro WHERE email LIKE \"%".$email."%\"";    
     $result = mysqli_query($conn, $sql);
 
     $fields = mysqli_fetch_array($result);
 
-    if(isset($fields['email']) == $email){
-        if(isset($fields['senha']) == $senhaUser){
+    if(isset($fields['email']) === $email){
+        if(isset($fields['senha']) === $senhaUser){
             $_SESSION['logged'] = true;
             $_SESSION['nome'] = $nome;
             $_SESSION['login'] = $email;
             $_SESSION['senha'] = $senhaUser;
+            $retorna = ['sit' => true, 'msg' => '<div class="alert alert-success" role="alert">Erro: Deu ruim hein</div>'];
+            $_SESSION['msg'] = '<div class="alert alert-success" role="alert">Deu bom aqui!</div>';
             header('Location: index.php');
         }
         else{
-            $retorno = array('codigo' => '0', 'mensagem' => 'Senha Invalida!');
-            echo json_encode($retorno);
+            //$retorna = ['sit' => false, 'msg' => '<div class="alert alert-danger" role="alert">Erro: Senha Inválida</div>'];
+            //$_SESSION['msg'] = '<div class="alert alert-danger" role="alert">Senha Inválida</div>';
             $_SESSION['logged'] = false;
-            //header("Location: login.php");
+            unset($_SESSION['nome']);
+            unset ($_SESSION['login']);
+            unset ($_SESSION['senha']);
+            header("Location: login.php");
         }
     }
     else{
@@ -113,20 +102,9 @@
         unset($_SESSION['nome']);
         unset ($_SESSION['login']);
         unset ($_SESSION['senha']);
-        //header('Location: login.php');
+        $retorna = ['sit' => false, 'msg' => '<div class="alert alert-danger" role="alert">Erro: Email Inválido</div>'];
+        $_SESSION['msg'] = '<div class="alert alert-danger" role="alert">Email Inválido</div>';
+        header('Location: login.php');
     }    
-    
-    
-    
-    // Se logado envia código 1, senão retorna mensagem de erro para o login
-    if ($_SESSION['logged'] == true){
-        $retorno = array('codigo' => 1, 'mensagem' => 'Logado com sucesso!');
-        //echo json_encode($retorno);
-        exit();
-    }
-    else{
-        $retorno = array('codigo' => '0', 'mensagem' => 'Você não está logado, faça o login para continuar.');
-        echo json_encode($retorno);
-        exit();
-    }
+
 ?>

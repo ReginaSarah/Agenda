@@ -2,32 +2,20 @@
     <header>
         <title>Cadastro Agenda</title>
         <meta charset='UTF-8'/>
-        <link rel="stylesheet" type="text/css" href="css/style.css"/>
+        <link rel="stylesheet" href="css/personalizado.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">  
     </header>
-
-    <script>
-        var boasVindas;
-        var nomeVisitante;
-
-        //nomeVisitante = prompt("Digite seu nome de princesa:");
-        //boasVindas = " Welcome, bitch " + nomeVisitante;
-
-        //alert(boasVindas);
-
-        function enviar(){
-            var content = document.getElementById('content');
-            var email = document.getElementById('email').value;
-            var senha = document.getElementById('senha').value;
-
-            content.append("Email:" + email + "   Senha:" + senha);
-            alert(email + senha); 
-        }
-    </script>
     
     <body>
 
-        <div id="menu"> 
-        </div>
+        
+    <?php
+            if (isset($_SESSION['msg'])) 
+            {
+                echo $_SESSION['msg'];
+                unset($_SESSION['msg']);
+            }
+        ?>
 
         <div id="content">
             Já tem uma conta? 
@@ -64,8 +52,15 @@
         </div>
 
         <div id="footer">
-
+            Entre em contato conosco
         </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="js/custom.js"></script>   
+        
     </body>
 
     <footer>

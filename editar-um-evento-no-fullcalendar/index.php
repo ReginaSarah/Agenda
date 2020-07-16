@@ -72,8 +72,6 @@
 					eventLimit: true, // allow "more" link when too many events
 					eventClick: function(event) {
 						$("#apagar_evento").attr("href", "proc-apag-evento.php?id=" + event.id);
-
-						//let $telefone = (event.extendedProps.telefone);
 						$('#visualizar #nome').text(event.title);
 						$('#visualizar #nome').val(event.title);
 						$('#visualizar #telefone').text(event.extendedProps.tel);
@@ -86,12 +84,7 @@
 						$('#visualizar #medico').val(event.med);
 						$('#visualizar #data_consulta').text(event.start.format('YYYY/MM/DD HH:mm:ss'));
 						$('#visualizar #data_consulta').val(event.start.format('YYYY/MM/DD HH:mm:ss'));
-						$('#visualizar').modal('show');
-
-
-
-
-		
+						$('#visualizar').modal('show');		
 						return false;
 
 					},
