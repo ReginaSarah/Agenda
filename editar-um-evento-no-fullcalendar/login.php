@@ -13,8 +13,8 @@ if(isset($_SESSION['logged']) &&  $_SESSION['logged'] == true){
     <header>
         <title>Login Agenda</title>
         <meta charset='UTF-8'/>
-        <link rel="stylesheet" href="css/personalizado.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">  
+        <lind rel="stylesheet" href="css/personalizado.css">
         <link rel="shortcut icon" href="calendar.ico" />      
     </header>
     
@@ -34,16 +34,23 @@ if(isset($_SESSION['logged']) &&  $_SESSION['logged'] == true){
                 </a>
 
             
-                <form id="formulario-entrar" autocomplete="off" method="GET" action="processLogin.php">
+                <form  autocomplete="off" method="GET" action="processLogin.php">
                     <fieldset>
                         <legend>Entre</legend>
-                        <input class="campo" type="text" id="nome" name="nome" placeholder="Nome"/>
+                        <div class="form-control form-control-lg">
+                            <label for="nome">Nome:</label>
+                            <input class="campo" type="text" id="nome" name="nome" />
+                        </div>
+                        <div class="form-control form-control-lg">
+                            <label for="email">Email:</label>
+                            <input class="campo" type="text" id="email" name="email"/>
+                        </div>
+                        <div class="form-control form-control-lg">
+                            <label for="senha">Senha:</label>
+                            <input class="campo" type="password" id="senha" name="senha" />
+                        </div>
                         <br/>
-                        <input class="campo" type="text" id="email" name="email" placeholder="Email"/>
-                        <br/>
-                        <input class="campo" type="password" id="senha" name="senha" placeholder="Senha"/>
-                        <br/>
-                        <button class="button" type = "submit" name="btn-login" id="btn-login"> Entrar </button>
+                        <button class="btn btn-primary" type = "submit" name="btn btn-primary" id="btn btn-primary"> Entrar </button>
                     </fieldset>
                 </form>
             </div>  
@@ -59,8 +66,6 @@ if(isset($_SESSION['logged']) &&  $_SESSION['logged'] == true){
     </body>
 
     <footer>
-            
             Entre em contato conosco
-
     </footer>
 </HTML>

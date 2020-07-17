@@ -29,22 +29,41 @@
                 <form id="formulario" autocomplete="off" method="GET" action="processCadastro.php">
                     <fieldset>
                         <legend>Registre-se</legend>
-                        <input class="campo" type="text" id="nome" name="nome" placeholder="Nome"/>
-                        <br/>
-                        <input class="campo" type="text" id="email" name="email" placeholder="Email"/>
-                        <br/>
-                        <input class="campo" type="text" id="cidade" name="cidade" placeholder="Cidade - Estado"/>
-                        <br/>
-                        <input class="campo" type="date" id="nascimento" name="nascimento" placeholder="Nascimento"/>
-                        <br/>
-                        <input class="campo" type="text" id="genero" name="genero" placeholder="Gênero"/>
-                        <br/>
-                        <input class="campo" type="password" id="senha" name="senha" placeholder="Senha"/>
-                        <br/>
-                        <input class="campo" type="password" id="confirmacaoSenha" name="confirmacaoSenha" placeholder="Confirme a Senha"/>
-                        <br/>
+                        <div class="form-control form-control-lg">
+                            <label for="nome">Nome:</label>
+                            <input class="campo" type="text" id="nome" name="nome" placeholder="Nome"/>
+                        </div>
+
+                        <div class="form-control form-control-lg">
+                            <label for="email">Email:</label>
+                            <input class="campo" type="text" id="email" name="email" placeholder="Email"/>
+                        </div>
+                        <div class="form-control form-control-lg">
+                            <label for="cidade">Cidade/Estado:</label>
+                            <input class="campo" type="text" id="cidade" name="cidade" placeholder="Cidade - Estado"/>
+                        </div>
+                        <div class="form-control form-control-lg">
+                            <label for="nascimento">Nascimento:</label>
+                            <input class="campo" type="date" id="nascimento" name="nascimento" placeholder="Nascimento"/>
+                        </div>
+                        <div class="form-control form-control-lg">
+                            <label class="my-1 mr-2" for="genero">Gênero:</label>
+                            <select >
+                                <option selected value="Fem">Feminino</option>
+                                <option value="Mas">Masculino</option>
+                                <option value="NA">Prefiro não declarar</option>
+                            </select>
+                        </div>
+                        <div class="form-control form-control-lg">
+                            <label for="senha">Senha:</label>
+                            <input class="campo" type="password" id="senha" name="senha" placeholder="Senha"/>
+                        </div>
+                        <div class="form-control form-control-lg">
+                            <label for="confirmacaoSenha">Confirme sua Senha:</label>
+                            <input class="campo" type="password" id="confirmacaoSenha" name="confirmacaoSenha" placeholder="Confirme a Senha"/>
+                        </div>
                     
-                        <button class="button" type = "submit"> Cadastrar </button>
+                        <button class="btn btn-primary" type = "submit"> Cadastrar </button>
                     </fieldset>
                 </form> 
             </center>

@@ -1,44 +1,4 @@
 <?php
-/*
-    //COLETA DOS DADOS DO FORMULÁRIO
-    $email = $_GET['email'];
-    $senhaUser = $_GET['senha'];
-    
-    //QUERY PARA DATABASE
-    $sql = "SELECT * FROM cadastro WHERE senha LIKE \"%".$senhaUser."%\"";    
-    $result = mysqli_query($connect, $sql);
-
-    $fields = mysqli_fetch_array($result);
-    
-    //echo $fields['nome'] . $fields['senha'] ;
-
-    if(isset($fields['email']) == $email){
-        if($fields['senha'] == $senhaUser){
-            header('Location: index.php');
-        }
-        else{
-            //senha();
-            header('Location: login.php');
-        }
-    }
-    else{
-        //email();
-        header('Location: login.php');
-    }
-    
-    
-    if($result->num_rows > 0){
-        echo "Deu bom!";
-        $_SESSION['logged'] = true;
-        $_SESSION['name'] = $fields['nome'];
-    }
-    else{
-        echo "Seu login não existe, tente outro...";
-    }*/
-    
-?>
-
-<?php
 
     session_start(); 
 
@@ -46,14 +6,13 @@
 
     $_SESSION['logged'] = false;
     
-    
     // Recebe os dados do formulário
     $email = (isset($_GET['email'])) ? $_GET['email'] : '' ;
     $senhaUser =(isset($_GET['senha'])) ? $_GET['senha'] : '' ;
-    $id = "SELECT id FROM cadastro WHERE email LIKE \"%".$email."%\"";
     $nome = (isset($_GET['nome'])) ? $_GET['nome'] : '' ;
-    
-    
+
+    $id = "SELECT id FROM cadastro WHERE email LIKE \"%".$email."%\"";
+        
     // Validações de preenchimento e-mail e senha se foi preenchido o e-mail
     if (empty($email)){
         $retorna = ['sit' => false, 'msg' => '<div class="alert alert-danger" role="alert">Erro: Preencha o campo de e-mail</div>'];
@@ -68,17 +27,24 @@
         header("Location: login.php");
         exit();
     }
-    
-    
+
+    // VALIDA O EMAIL
+    if(!(filter_var($email, FILTER_VALIDATE_EMAIL))){
+        $retorna = ['sit' => false, 'msg' => '<div class="alert alert-danger" role="alert">Erro: Emaiido</div>'];
+        $_SESSION['msg'] = '<div class="alert alert-danger" role="alert">aqui</div>';
+        header("Location: login.php");
+        exit();
+    }
     
     //  Válida os dados do usuário com o banco de dados
     $sql = "SELECT * FROM cadastro WHERE email LIKE \"%".$email."%\"";    
     $result = mysqli_query($conn, $sql);
-
+    
+    $rows = mysqli_num_rows($result);
     $fields = mysqli_fetch_array($result);
 
-    if(isset($fields['email']) === $email){
-        if(isset($fields['senha']) === $senhaUser){
+    if(($fields['email']) == $email){
+        if($fields['senha'] == $senhaUser){
             $_SESSION['logged'] = true;
             $_SESSION['nome'] = $nome;
             $_SESSION['login'] = $email;
@@ -88,12 +54,12 @@
             header('Location: index.php');
         }
         else{
-            //$retorna = ['sit' => false, 'msg' => '<div class="alert alert-danger" role="alert">Erro: Senha Inválida</div>'];
-            //$_SESSION['msg'] = '<div class="alert alert-danger" role="alert">Senha Inválida</div>';
             $_SESSION['logged'] = false;
             unset($_SESSION['nome']);
             unset ($_SESSION['login']);
             unset ($_SESSION['senha']);
+            $retorna = ['sit' => false, 'msg' => '<div class="alert alert-danger" role="alert">Erro: Senha Inválida</div>'];
+            $_SESSION['msg'] = '<div class="alert alert-danger" role="alert">Senha Inválida</div>';
             header("Location: login.php");
         }
     }
@@ -106,5 +72,6 @@
         $_SESSION['msg'] = '<div class="alert alert-danger" role="alert">Email Inválido</div>';
         header('Location: login.php');
     }    
+
 
 ?>

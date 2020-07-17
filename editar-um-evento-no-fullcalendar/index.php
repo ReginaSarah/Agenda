@@ -1,15 +1,7 @@
 <?php
-	//session_start();
+
 	include_once ("conexao.php");
-	//include_once ("processLogin.php");
-
-	/*if(!isset ($_SESSION['logged']) == true)
-	{
-	unset($_SESSION['logged']);
-	header('login.php');
-	}
-
-	$login = $_SESSION['logged'];*/
+	
 	session_start();
 	if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true))
 	{	
@@ -18,7 +10,6 @@
 		unset($_SESSION['senha']);
 		header('location:login.php');
 	}
-	
 	
 	$logado = $_SESSION['nome'];
 
@@ -72,12 +63,17 @@
 					eventLimit: true, // allow "more" link when too many events
 					eventClick: function(event) {
 						$("#apagar_evento").attr("href", "proc-apag-evento.php?id=" + event.id);
+
+						$('#visualizar #id').text(event.id);
+						$('#visualizar #id').val(event.id);
 						$('#visualizar #nome').text(event.title);
 						$('#visualizar #nome').val(event.title);
+						$('#visualizar #cod').text(event.cod);
+						$('#visualizar #cod').val(event.cod);
 						$('#visualizar #telefone').text(event.extendedProps.tel);
 						$('#visualizar #telefone').val(event.extendedProps.tel);
-						$('#visualizar #color').text(event.color);
-						$('#visualizar #color').val(event.color);
+						$('#visualizar #cidade').text(event.color);
+						$('#visualizar #cidade').val(event.color);
 						$('#visualizar #convenio').text(event.conv);
 						$('#visualizar #convenio').val(event.conv);
 						$('#visualizar #medico').text(event.med);
@@ -111,6 +107,7 @@
 									},
 									conv: '<?php echo $row_events['convenio']; ?>',
 									med: '<?php echo $row_events['medico']; ?>',
+									cod: '<?php echo $row_events['cod']; ?>',
 								},<?php
 							}
 						?>
@@ -139,12 +136,16 @@
 					<div class="modal-body">
 						<div class="visualizar">
 							<dl class="dl-horizontal">
+								<dt>Id:</dt>
+								<dd id="id"></dd>
 								<dt>Nome:</dt>
 								<dd id="nome"></dd>
+								<dt>Código:</dt>
+								<dd id="cod"></dd>
 								<dt>Telefone:</dt>
 								<dd id="telefone"></dd>
 								<dt>Cidade:</dt>
-								<dd id="color"></dd>
+								<dd id="cidade"></dd>
 								<dt>Indicação:</dt>
 								<dd id="medico"></dd>
 								<dt>Convênio:</dt>
@@ -152,49 +153,43 @@
 								<dt>Data/Hora:</dt>
 								<dd id="data_consulta"></dd>
 							</dl>
-							<button id="editar" type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalLabel" 
-									data-whatever="<?php echo $row_events['id']; ?>" 
-									data-whatevernome="<?php echo $row_events['nome']; ?>" 
-									data-whatevercod="<?php echo $row_events['cod']; ?>" 
-									data-whatevertelefone="<?php echo $row_events['telefone']; ?>"
-									data-whateverconvenio="<?php echo $row_events['convenio']; ?>"
-									data-whatevercidade="<?php echo $row_events['cidade']; ?>"
-									data-whatevermedico="<?php echo $row_events['medico']; ?>"
-									data-whateverdata_consulta="<?php echo $row_events['data_consulta']; ?>">
-									Editar
-							</button>
+							<button id="editar" type="button" class="btn btn-warning btn-canc-edit" data-toggle="modal" data-target="#exampleModalLabel">Editar</button>
 							<a href="" id="apagar_evento" class="btn btn-danger">Apagar</a>
 						</div>
 						
 						<div class="form">
 							<form method="GET" action="proc_edit_evento.php" enctype="multipart/form-data">
 								<div class="form-group">
-									<label for="recipient-name" class="control-label">Nome:</label>
-									<input name="nome" type="text" class="form-control" id="event.id">
+									<label for="id" class="control-label">Id:</label>
+									<input name="id" type="text" class="form-control" id="id" readonly>
 								</div>
 								<div class="form-group">
-									<label for="recipient-cod" class="control-label">Código</label>
-									<input name="cod" type="text" class="form-control" id="recipient-name">
+									<label for="nome" class="control-label">Nome:</label>
+									<input name="nome" type="text" class="form-control" id="nome">
 								</div>
 								<div class="form-group">
-									<label for="recipient-telefone" class="control-label">Telefone</label>
-									<input name="telefone" type="text" class="form-control" id="recipient-name">
+									<label for="cod" class="control-label">Código</label>
+									<input name="cod" type="text" class="form-control" id="cod">
 								</div>
 								<div class="form-group">
-									<label for="recipient-convenio" class="control-label">Convênio</label>
-									<input name="convenio" type="text" class="form-control" id="recipient-name">
+									<label for="telefone" class="control-label">Telefone</label>
+									<input name="telefone" type="text" class="form-control" id="telefone">
 								</div>
 								<div class="form-group">
-									<label for="recipient-cidade" class="control-label">Estado/Cidade</label>
-									<input name="cidade" type="text" class="form-control" id="recipient-name">
+									<label for="convenio" class="control-label">Convênio</label>
+									<input name="convenio" type="text" class="form-control" id="convenio">
 								</div>
 								<div class="form-group">
-									<label for="recipient-medico" class="control-label">Indicação</label>
-									<input name="medico" type="text" class="form-control" id="recipient-name">
+									<label for="cidade" class="control-label">Estado/Cidade</label>
+									<input name="cidade" type="text" class="form-control" id="cidade">
 								</div>
 								<div class="form-group">
-									<label for="recipient-data_consulta" class="control-label">Data</label>
-									<input name="data_consulta" type="text" class="form-control" id="start" placeholder="AAAA/MM/DD HH:mm:ss">
+									<label for="medico" class="control-label">Indicação</label>
+									<input name="medico" type="text" class="form-control" id="medico">
+								</div>
+								<div class="form-group">
+									<label for="data_consulta" class="control-label">Data</label>
+									<input name="data_consulta" type="text" class="form-control" id="data_consulta" placeholder="AAAA/MM/DD HH:mm:ss">
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
