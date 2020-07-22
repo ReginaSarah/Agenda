@@ -13,17 +13,19 @@ if(isset($_SESSION['logged']) &&  $_SESSION['logged'] == true){
     <header>
         <title>Login Agenda</title>
         <meta charset='UTF-8'/>
-        
-        
+        <lind rel="stylesheet" href="css/style2.css">        
     </header>
     
     <body>
 
-        <div id="content">
+        <div id="header">
             Não tem uma conta? 
             <a href = "cadastro.php">
                 Cadastre aqui
             </a>
+        </div>
+        <div id="content">
+           
 
             <center>
                 <form id="formulario-entrar" autocomplete="off" method="GET" action="processLogin.php">

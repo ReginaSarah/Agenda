@@ -1,35 +1,13 @@
 <?php
+	$servidor = "localhost";
+	$usuario = "root";
+	$senha = "";
+	$dbname = "eventos";
+	
+	//Criar a conexao
+	$conn = mysqli_connect($servidor, $usuario, $senha, $dbname);
 
-    $host = 'localhost';
-    $user = 'root';
-    $senha = '';
-    $db = 'eventos';
-
-    //CONEXAO COM O BANCO DE DADOS
-    $connect = mysqli_connect($host, $user, $senha, $db);
-
-    $data = array();
-    //QUERY PARA DATABASE
-    $sql = "SELECT * FROM consulta";    
-    $statement = $connect->prepare($sql);
-    $statement->execute();
-
-    $result = $statement -> mysqli_stmt::fetchAll();
-
-    foreach($state as $row){
-        $data[] = array(
-            'id' => $row['id'],
-            'nome' => $row['nome'],
-            'cod'=> $row['cod'],
-            'telefone' => $row['telefone'],
-            'convenio' => $row['convenio'],
-            'cidade' => $row['cidade'],
-            'medico' => $row['medico'],
-            'data_consulta' => $row['data_consulta']
-        );
+	if($conn === false){
+        die("ERROR: Could not connect. " . mysqli_connect_error());
     }
-
-    echo json_encode($data);
-    
-
 ?>
