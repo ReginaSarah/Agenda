@@ -21,7 +21,7 @@
     padding: 5px;
 }
 #footer{
-    height: 20px;
+    height: 100px;
     background-color: #CED1D9;;
     padding: 5px;
 }
@@ -34,20 +34,19 @@
 #formulario{
     position: absolute;
     width: 350px;
-    height: 300px;
+    height: 270px;
     left: 600px;
-    top: 149px;
+    top: 222px;
 
     background: #E3E8E9;
     border-radius: 20px;
 }
-
 #formulario-cad{
     position: absolute;
-    width: 600;
-    height: 450;
+    width: 600px;
+    height: 470px;
     left: 447px;
-    top: 149px;
+    top: 140px;
 
     background: #E3E8E9;
     border-radius: 20px;

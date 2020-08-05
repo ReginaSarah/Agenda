@@ -27,7 +27,7 @@
 		}
 
 	}
-	$result_events = "SELECT id, nome, cod, telefone, cidade, convenio, medico, data_consulta FROM consulta";
+	$result_events = "SELECT id, nome, cod, telefone, cidade, convenio, medico, data_consulta, radiografia FROM consulta";
 	$resultado_events = mysqli_query($conn, $result_events);
 ?>
 
@@ -48,11 +48,12 @@
 		<script src='locale/pt-br.js'></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 
+		
 
 		<div class="col-md-10 text-right"> 
 			<button type="button" class="btn btn-secondary">
 				<a href = "perfil.php">
-					Perfil <?php $logado ?>
+					Perfil <?php echo $nomeMed ?>
 				</a>
 			</button>
 			<button type="button" class="btn btn-secondary">
@@ -60,7 +61,21 @@
 					Sair
 				</a>
 			</button>
+			<?php
+                if (isset($_SESSION['msn'])) 
+                {
+                    echo $_SESSION['msn'];
+                    unset($_SESSION['msn']);
+				}
+				if (isset($_SESSION['m'])) 
+                {
+                    echo $_SESSION['m'];
+                    unset($_SESSION['m']);
+                }
+            ?>
 		</div>
+
+			
 		
 		
 		<script>
@@ -94,7 +109,10 @@
 						$('#visualizar #medico').val(event.med);
 						$('#visualizar #data_consulta').text(event.start.format('YYYY/MM/DD HH:mm:ss'));
 						$('#visualizar #data_consulta').val(event.start.format('YYYY/MM/DD HH:mm:ss'));
+						$('#visualizar #radiografia').text(event.rad);
+						$('#visualizar #radiografia').val(event.rad);
 						$('#visualizar').modal('show');
+
 						$('.apagar').hide();
 						return false;
 
@@ -124,6 +142,7 @@
 									conv: '<?php echo $row_events['convenio']; ?>',
 									med: '<?php echo $row_events['medico']; ?>',
 									cod: '<?php echo $row_events['cod']; ?>',
+									rad: '<?php echo $row_events['radiografia'];?>',
 								},<?php
 							}
 						?>
@@ -168,6 +187,8 @@
 								<dd id="convenio"></dd>
 								<dt>Data/Hora:</dt>
 								<dd id="data_consulta"></dd>
+								<dt>Tipo de Radiografia:</dt>
+								<dd id="radiografia"></dd>
 							</dl>
 							<button id="editar" type="button" class="btn btn-warning btn-canc-edit" data-toggle="modal" data-target="#exampleModalLabel">Editar</button>
 							<button type="button" class="btn btn-danger btn-canc-canc">Apagar</button>
@@ -208,15 +229,19 @@
 								</div>
 								<div class="form-group">
 									<label for="cidade" class="control-label">Estado/Cidade</label>
-									<input name="cidade" type="text" class="form-control" id="cidade">
+									<input name="cidade" type="text" class="form-control" id="cidade" readonly>
 								</div>
 								<div class="form-group">
 									<label for="medico" class="control-label">Dentista</label>
-									<input name="medico" type="text" class="form-control" id="medico">
+									<input name="medico" type="text" class="form-control" id="medico" readonly>
 								</div>
 								<div class="form-group">
 									<label for="data_consulta" class="control-label">Data</label>
 									<input name="data_consulta" type="text" class="form-control" id="data_consulta" placeholder="AAAA/MM/DD HH:mm:ss">
+								</div>
+								<div class="form-group">
+									<label for="radiografia" class="control-label">Tipo de Radiografia</label>
+									<textarea name="radiografia" type="text" class="form-control" id="radiografia" ></textarea>
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-primary btn-canc-vis">Cancelar</button>
@@ -256,15 +281,19 @@
 							</div>
 							<div class="form-group">
 								<label for="<?php $cidadeMed ?>" class="control-label">Estado/Cidade</label>
-								<input name="cidade" type="text" class="form-control" id="cidade" placeholder="<?php echo $cidadeMed ?>">
+								<input name="cidade" type="text" class="form-control" id="cidade" placeholder="<?php echo $cidadeMed ?>" readonly>
 							</div>
 							<div class="form-group">
 								<label for="<?php $nomeMed ?>" class="control-label">Dentista</label>
-								<input name="medico" type="text" class="form-control" id="medico" placeholder="<?php echo $nomeMed ?>">
+								<input name="medico" type="text" class="form-control" id="medico" placeholder="<?php echo $nomeMed ?>" readonly>
 							</div>
 							<div class="form-group">
 								<label for="data_consulta" class="control-label">Data</label>
 								<input name="data_consulta" type="text" class="form-control" id="start" onkeypress="$(this).mask('0000/00/00 00:00:00')">
+							</div>
+							<div class="form-group">
+								<label for="radiografia" class="control-label">Tipo de Radiografia</label>
+								<textarea name="radiografia" type="text" class="form-control" id="radiografia"></textarea>
 							</div>
 							<div class="modal-footer">
 								<button type="submit" class="btn btn-success">Cadastrar</button>

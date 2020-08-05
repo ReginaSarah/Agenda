@@ -30,7 +30,7 @@
     // VALIDA O EMAIL
     if(!(filter_var($email, FILTER_VALIDATE_EMAIL))){
         $retorna = ['sit' => false, 'msg' => '<div class="alert alert-danger" role="alert">Erro: Emaiido</div>'];
-        $_SESSION['msg'] = '<div class="alert alert-danger" role="alert">aqui</div>';
+        $_SESSION['msg'] = '<div class="alert alert-danger" role="alert">Email Inválido</div>';
         header("Location: index.php");
         exit();
     }

@@ -9,7 +9,7 @@
 		unset($_SESSION['nome']);
 		unset($_SESSION['login']);
 		unset($_SESSION['senha']);
-		header('location:login.php');
+		header('location: index.php');
 	}
 	$logado = $_SESSION['login'];
 
@@ -148,14 +148,6 @@
 							<div class="form-group">
 								<label for="recipient-nascimento" class="control-label">Nascimento:</label>
 								<input name="nascimento"  type="Date" class="form-control" id="recipient-nascimento"></input>
-							</div>
-							<div class="form-group">
-								<label for="recipient-senha" class="control-label">Senha:</label>
-								<input name="senha"  type="password" class="form-control" id="recipient-senha"></input>
-							</div>
-							<div class="form-group">
-								<label for="recipient-confirmacaoSenha" class="control-label">Confirmação de Senha:</label>
-								<input name="confirmacaoSenha"  type="password" class="form-control" id="recipient-confirmacaoSenha"></input>
 							</div>
 							<input name="id" type="hidden" id="id">
 							<div class="modal-footer">

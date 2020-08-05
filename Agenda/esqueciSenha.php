@@ -22,11 +22,10 @@ if(isset($_SESSION['logged']) &&  $_SESSION['logged'] == true){
 
         <div id="header">
             <h1> Agenda Radiografia </h1>
-            Não tem uma conta? 
-            <a href = "cadastro.php">
-                Cadastre aqui
+            Lembrou da senha?
+            <a href = "index.php">
+                Entre aqui
             </a>
-
             <?php
                 if (isset($_SESSION['msg'])) 
                 {
@@ -38,22 +37,26 @@ if(isset($_SESSION['logged']) &&  $_SESSION['logged'] == true){
         
         
         <div id="content">
-            <form id="formulario" autocomplete="off" method="GET" action="processLogin.php">
-                <h4><br/>Entre</h4>
-                <div class="form-control form-control-lg">
+            <form id="formulario" autocomplete="off" method="GET" action="processSenha.php">
+                <h6><br/>Nova Senha</h6>
+                <div class="form-control">
                     <label for="email">Email:</label>
                     <input class="campo" type="text" id="email" name="email"/>
                 </div>
-                <div class="form-control form-control-lg">
-                    <label for="senha">Senha:</label>
+                <div class="form-control">
+                    <label for="CPF">Digite seu CPF:</label>
+                    <input class="campo" type="text" id="CPF" name="CPF" minlength="14" maxlength="14" onkeypress="$(this).mask('000.000.000-00')"/>
+                </div>
+                <div class="form-control ">
+                    <label for="senha">Nova senha:</label>
                     <input class="campo" type="password" id="senha" name="senha" />
                 </div>
-                
-                <a href = "esqueciSenha.php">
-                    Esqueci minha senha :(
-                </a>
-                <br/><br/>
-                <button class="btn btn-primary" type = "submit" name="btn btn-primary" id="btn btn-primary"> Entrar </button>            
+                <div class="form-control">
+                    <label for="confirmacaoSenha">Confirme senha:</label>
+                    <input class="campo" type="password" id="confirmacaoSenha" name="confirmacaoSenha" />
+                </div>
+                <br/>
+                <button class="btn btn-primary" type = "submit" name="btn btn-primary" id="btn btn-primary"> Enviar </button>            
             </form>
             <br/><br/><br/><br/>
             <br/><br/><br/><br/><br/>   
@@ -72,6 +75,7 @@ if(isset($_SESSION['logged']) &&  $_SESSION['logged'] == true){
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>   
         <script>
             $('input').click(function(){
                 $.ajax({
